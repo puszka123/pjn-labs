@@ -22,6 +22,7 @@ def find_szkoda(data):
         for word in found:
             if proper(word):
                 words.append(word)
+                break
 
 
 def main():
