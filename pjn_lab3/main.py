@@ -78,10 +78,9 @@ def main():
     frequency_list = Counter(words)
     sorted_list = sorted(frequency_list.items(), key=operator.itemgetter(1), reverse=True)
     ready_list = remove(sorted_list)
-    positions = list(range(1, len(ready_list)))
+    positions = list(range(0, len(ready_list)))
     wds, values = zip(*ready_list)
-    pl.hist(values, bins=np.logspace(np.log10(1), np.log10(len(ready_list)), 100))
-    pl.gca().set_xscale("log")
+    pl.loglog(positions, values)
     pl.title('positions and number of words occurrences')
     pl.xlabel('position')
     pl.ylabel('occurences')
@@ -96,9 +95,9 @@ def main():
     chosen_words = []
     for i in range(0, 30):
         chosen_words.append(not_in_dict[i])
-    print(chosen_words)
     corrected = levenshtein(ready_list, chosen_words)
-    print(corrected)
+    for i in range(0, len(chosen_words)):
+        print(chosen_words[i] + ' ' + corrected[i][0])
 
 
 start_time = time.time()
