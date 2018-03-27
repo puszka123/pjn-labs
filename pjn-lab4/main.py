@@ -50,7 +50,7 @@ def calculate_pmi(unigrams, bigrams):
 
 def H(k):
     N = np.sum(k)
-    return np.sum((k/N)*np.log(k/N))
+    return np.sum((k/N)*np.log(k/N + (k == 0)))
 
 
 def llr(k):
@@ -63,8 +63,8 @@ def calculate_llr(bigrams, unigrams, bigrams_sum):
     for bigram in bigrams:
         w1, w2 = bigram.split(' ')
         k[0][0] = bigrams[bigram]
-        k[0][1] = unigrams[w2]*2 - k[0][0]
-        k[1][0] = unigrams[w1]*2 - k[0][0]
+        k[0][1] = unigrams[w2] - k[0][0]
+        k[1][0] = unigrams[w1] - k[0][0]
         k[1][1] = bigrams_sum - k[0][0] - k[0][1] - k[1][0]
         d[bigram] = llr(k)
     return d
